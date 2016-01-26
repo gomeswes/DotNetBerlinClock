@@ -1,0 +1,16 @@
+*.dll
+bin/Debug/BerlinClockHcl.pdb
+*.suo
+bin/Debug/BerlinClock.dll.config
+*.pdb
+*.txt
+obj/Debug/BerlinClock.csprojResolveAssemblyReference.cache
+*.cache
+obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+packages/SpecFlow.1.9.0/content/App.config.transform
+*.nupkg
+packages/SpecFlow.1.9.0/tools/TechTalk.SpecFlow.tasks
+*.targets
+packages/SpecFlow.1.9.0/tools/specflow.exe

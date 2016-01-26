@@ -2,8 +2,9 @@
 using TechTalk.SpecFlow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using BerlinClockHcl.BDD;
 
-namespace BerlinClock
+namespace BerlinClockHcl
 {
     [Binding]
     public class TheBerlinClockSteps
@@ -15,13 +16,15 @@ namespace BerlinClock
         [When(@"the time is ""(.*)""")]
         public void WhenTheTimeIs(string time)
         {
-            theTime = time;
+            theTime = time.CheckAndCastToNull();
         }
         
         [Then(@"the clock should look like")]
         public void ThenTheClockShouldLookLike(string theExpectedBerlinClockOutput)
         {
-            Assert.AreEqual(berlinClock.convertTime(theTime), theExpectedBerlinClockOutput);
+            var theActualBerlinClockOutput = berlinClock.ConvertTime(theTime);
+            Assert.AreEqual(theActualBerlinClockOutput.RemoveCarriageReturn(), 
+                            theExpectedBerlinClockOutput.RemoveCarriageReturn());
         }
 
     }
