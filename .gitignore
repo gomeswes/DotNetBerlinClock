@@ -14,3 +14,7 @@ packages/SpecFlow.1.9.0/content/App.config.transform
 packages/SpecFlow.1.9.0/tools/TechTalk.SpecFlow.tasks
 *.targets
 packages/SpecFlow.1.9.0/tools/specflow.exe
+packages/jQuery.UI.Combined.1.8.24/Content/Content/themes/base/minified/jquery.ui.accordion.min.css
+packages/
+bin/
+obj/
