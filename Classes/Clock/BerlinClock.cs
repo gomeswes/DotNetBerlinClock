@@ -9,12 +9,11 @@ namespace BerlinClockHcl.Classes.Clock
     {
         private IList<IRow> rows;
         private readonly TimeSpan aTime;
-        public BerlinClock(TimeSpan aTime)
+        public BerlinClock(int hours, int minutes, int seconds)
         {
-            this.aTime = aTime;
-            if (CheckTimeIsInvalid())
+            if (CheckTimeIsInvalid(hours, minutes, seconds))
                 throw new MoreThanTwentyFourHoursTimeException();
-
+            aTime = new TimeSpan(hours, minutes, seconds);
             rows = new List<IRow>();
             rows.Add(new TopRow());
             rows.Add(new FirstRow());
@@ -23,9 +22,9 @@ namespace BerlinClockHcl.Classes.Clock
             rows.Add(new FourthRow());
         }
 
-        private bool CheckTimeIsInvalid()
+        private bool CheckTimeIsInvalid(int hours, int minutes, int seconds)
         {
-            return aTime.TotalHours > 24;
+            return hours > 24 || minutes > 59 || seconds > 59;
         }
 
         public string GetLightsConfiguration()

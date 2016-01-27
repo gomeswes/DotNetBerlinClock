@@ -138,18 +138,35 @@ testRunner.Then("the clock should look like", "Y\r\nRRRR\r\nRRRR\r\nOOOOOOOOOOO\
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("The 13 hours")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "The Berlin Clock")]
+        public virtual void The13Hours()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The 13 hours", ((string[])(null)));
+#line 53
+this.ScenarioSetup(scenarioInfo);
+#line 54
+testRunner.When("the time is \"13:00:00\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 55
+testRunner.Then("the clock should look like", "Y\r\nRROO\r\nRRRO\r\nOOOOOOOOOOO\r\nOOOO", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Missing time info")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "The Berlin Clock")]
         public virtual void MissingTimeInfo()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Missing time info", ((string[])(null)));
-#line 53
+#line 64
 this.ScenarioSetup(scenarioInfo);
-#line 54
+#line 65
 testRunner.When("the time is \"24:20:\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 55
-testRunner.Then("the clock should look like", "Sorry! Missing time information. I expect something like \"00:00:00\" to \"24:00:00\"" +
+#line 66
+testRunner.Then("the clock should look like", "Sorry! Missing time information. I expect something like \"00:00:00\" to \"24:59:59\"" +
                     " (hh:mm:ss)", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -161,14 +178,14 @@ testRunner.Then("the clock should look like", "Sorry! Missing time information. 
         public virtual void MissingTimeValueSeparator()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Missing time value separator", ((string[])(null)));
-#line 60
+#line 71
 this.ScenarioSetup(scenarioInfo);
-#line 61
+#line 72
 testRunner.When("the time is \"1345:00\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 62
+#line 73
 testRunner.Then("the clock should look like", "Sorry! Bad time format. Aren\'t you missing some \":\". I expect something like \"00:" +
-                    "00:00\" to \"24:00:00\" (hh:mm:ss)", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                    "00:00\" to \"24:59:59\" (hh:mm:ss)", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -179,13 +196,30 @@ testRunner.Then("the clock should look like", "Sorry! Bad time format. Aren\'t y
         public virtual void MoreThan2400Time()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("More than 2400 time", ((string[])(null)));
-#line 67
+#line 78
 this.ScenarioSetup(scenarioInfo);
-#line 68
+#line 79
 testRunner.When("the time is \"26:04:41\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 69
-testRunner.Then("the clock should look like", "I can\'t do it! Sorry but i expect a time between \"00:00:00\" and \"24:00:00\"", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 80
+testRunner.Then("the clock should look like", "I can\'t do it! Sorry but i expect a time between \"00:00:00\" and \"24:59:59\"", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("More than 60 minutes")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "The Berlin Clock")]
+        public virtual void MoreThan60Minutes()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("More than 60 minutes", ((string[])(null)));
+#line 85
+this.ScenarioSetup(scenarioInfo);
+#line 86
+testRunner.When("the time is \"24:68:88\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 87
+testRunner.Then("the clock should look like", "I can\'t do it! Sorry but i expect a time between \"00:00:00\" and \"24:59:59\"", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -196,12 +230,12 @@ testRunner.Then("the clock should look like", "I can\'t do it! Sorry but i expec
         public virtual void TheTotallyWrongTome()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The totally wrong tome", ((string[])(null)));
-#line 74
+#line 93
 this.ScenarioSetup(scenarioInfo);
-#line 75
+#line 94
 testRunner.When("the time is \"null\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 76
+#line 95
 testRunner.Then("the clock should look like", "Oh no! Something went wrong! Please check if the value you are providing is not n" +
                     "ull", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

@@ -18,3 +18,5 @@ packages/jQuery.UI.Combined.1.8.24/Content/Content/themes/base/minified/jquery.u
 packages/
 bin/
 obj/
+BerlinClockHcl.Demo/Properties/PublishProfiles/Winhost.pubxml
+BerlinClockHcl.Demo/Properties/PublishProfiles/Winhost.pubxml.user

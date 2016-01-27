@@ -3,7 +3,12 @@
     var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     var $timeInput = $("#timeInput");
     $timeInput.mask("00:00:00");
-    berlinClock.init(time, $("#btnChangeTime"), $timeInput);
+    berlinClock.init(time, $("#btnChangeTime"), $timeInput,
+        function () {
+            $('#loadingMessage').addClass("hide");
+            $('#pageContent').removeAttr('style');
+        }
+    );
 });
 
 var berlinClock = (function () {
@@ -18,8 +23,8 @@ var berlinClock = (function () {
         red: "red-light",
         off: "off-light"
     };
-    exports.init = function (timeParam, $btnChangeTime, $timeInput) {
-        applyTime(timeParam);
+    exports.init = function (timeParam, $btnChangeTime, $timeInput, callback) {
+        applyTime(timeParam, callback);
         $btnChangeTime.unbind('click');
         $timeInput.bind('keypress', function (evt) {
             if (evt.charCode == 13) {
@@ -29,10 +34,16 @@ var berlinClock = (function () {
         $btnChangeTime.bind('click', toChangeClockTime);
     };
 
-    var applyTime = function (timeParam) {
+    var applyTime = function (timeParam, callback) {
         doQueryForTime(timeParam)
-        .done(drawTime)
-        .fail(informError);
+        .done(function (clockData) {
+            drawTime(clockData);
+            if (callback) {
+                callback();
+            }
+        }).fail(informError);
+
+        
     };
 
     var toChangeClockTime = function () {

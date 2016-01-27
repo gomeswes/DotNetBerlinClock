@@ -11,8 +11,8 @@ namespace BerlinClockHcl
         {
             try
             {
-                TimeSpan aTimeConverted = TransformToTimeSpan(aTime);
-                var berlinClock = new BerlinClock(aTimeConverted);
+                TimeParts timePartsConverted = ExtractTimeParts(aTime);
+                var berlinClock = new BerlinClock(timePartsConverted.Hours, timePartsConverted.Minutes, timePartsConverted.Seconds);
                 return berlinClock.GetLightsConfiguration();
             }
             catch(MoreThanTwentyFourHoursTimeException moreThanTwentyFourHoursTimeException)
@@ -34,19 +34,30 @@ namespace BerlinClockHcl
             
         }
 
-        private TimeSpan TransformToTimeSpan(string aTime)
+        private TimeParts ExtractTimeParts(string aTime)
         {
             char timeValueSeparator = ':';
             if (CheckForInvalidTimeValueSeparator(timeValueSeparator,aTime))
                 throw new MissingTimeValueSeparatorException();
 
             var timeArray = aTime.Split(timeValueSeparator).Select(item => Convert.ToInt32(item)).ToArray();
-            return new TimeSpan(timeArray[0], timeArray[1], timeArray[2]);
+            TimeParts timeParts;
+            timeParts.Hours = timeArray[0];
+            timeParts.Minutes = timeArray[1];
+            timeParts.Seconds = timeArray[2];
+            return timeParts;
         }
 
         private bool CheckForInvalidTimeValueSeparator(char timeValueSeparator, string aTime)
         {
             return aTime.Count(letter => letter.Equals(timeValueSeparator)) != 2;
+        }
+
+        private struct TimeParts
+        {
+            public int Hours;
+            public int Minutes;
+            public int Seconds;
         }
     }
 }
