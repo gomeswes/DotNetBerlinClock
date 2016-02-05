@@ -2,14 +2,21 @@
 {
     internal static class LightsTransformer
     {
-        internal static string Transform(short numberOfLightsOn, string onLight)
+        internal static string Transform(short numberOfLightsOn, string onLight, bool hasBreakLine)
         {
             var lightsConfiguration = string.Empty;
             while (NumberOfLightsOnAreNotConfigured(lightsConfiguration.Length, numberOfLightsOn))
             {
                 lightsConfiguration += onLight;
             }
-            return MountLightsOff(BerlinClockConstants.HourRowsTotalLights, lightsConfiguration);
+            lightsConfiguration = MountLightsOff(BerlinClockConstants.HourRowsTotalLights, lightsConfiguration);
+            
+            
+            if (hasBreakLine)
+            {
+                return lightsConfiguration + "\n";
+            }
+            return lightsConfiguration;
         }
 
         private static bool NumberOfLightsOnAreNotConfigured(int lightsConfigurationLength, short numberOfLightsOn)
@@ -17,7 +24,7 @@
             return lightsConfigurationLength < numberOfLightsOn;
         }
 
-        internal static string TransformSpecialCase(short numberOfTotalLights, short redLightDiviser, short numberOfLightsOn)
+        internal static string TransformSpecialCase(short numberOfTotalLights, short redLightDiviser, short numberOfLightsOn, bool hasBreakLine)
         {
             var rowLights = string.Empty;
             while (NumberOfLightsOnAreNotConfigured(rowLights.Length, numberOfLightsOn))
@@ -26,6 +33,11 @@
                     rowLights += BerlinClockConstants.RedLight;
                 else
                     rowLights += BerlinClockConstants.YellowLight;
+            }
+            rowLights = MountLightsOff(numberOfTotalLights, rowLights);
+            if (hasBreakLine)
+            {
+                return rowLights + "\n";
             }
             return MountLightsOff(numberOfTotalLights, rowLights);
         }

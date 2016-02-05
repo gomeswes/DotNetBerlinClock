@@ -1,6 +1,7 @@
 ﻿using BerlinClockHcl.Classes.CustomExceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BerlinClockHcl.Classes.Clock
@@ -29,20 +30,8 @@ namespace BerlinClockHcl.Classes.Clock
 
         public string GetLightsConfiguration()
         {
-            StringBuilder lightsRepresentation = new StringBuilder();
-            foreach (var row in rows)
-            {
-                if (row.HasLineBreak)
-                {
-                    lightsRepresentation.AppendLine(row.GetLightsConfiguration(this.aTime));
-                }
-                else
-                {
-                    lightsRepresentation.Append(row.GetLightsConfiguration(this.aTime));
-                }
-            }
-
-            return lightsRepresentation.ToString();
+            var lightsRepresentation  = string.Join("",rows.Select((row) => row.GetLightsConfiguration(this.aTime)));
+            return lightsRepresentation;
         }
     }
 }

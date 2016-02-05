@@ -12,7 +12,8 @@ namespace BerlinClockHcl.Classes.Clock
     {
         public string GetLightsConfiguration(TimeSpan aTime)
         {
-            return (aTime.Seconds % 2 == 0 ? BerlinClockConstants.YellowLight : BerlinClockConstants.OffLight);
+
+            return (aTime.Seconds % 2 == 0 ? BerlinClockConstants.YellowLight : BerlinClockConstants.OffLight) + "\n";
         }
         public bool HasLineBreak
         {
@@ -25,7 +26,7 @@ namespace BerlinClockHcl.Classes.Clock
         public string GetLightsConfiguration(TimeSpan aTime)
         {
             short numberOfLightsOn = Convert.ToInt16(Math.Floor(aTime.TotalHours / BerlinClockConstants.Diviser));
-            return LightsTransformer.Transform(numberOfLightsOn, BerlinClockConstants.RedLight);
+            return LightsTransformer.Transform(numberOfLightsOn, BerlinClockConstants.RedLight, HasLineBreak);
         }
         public bool HasLineBreak
         {
@@ -38,7 +39,7 @@ namespace BerlinClockHcl.Classes.Clock
         public string GetLightsConfiguration(TimeSpan aTime)
         {
             short numberOfTotalLightsOn = Convert.ToInt16(Math.Floor(aTime.TotalHours % BerlinClockConstants.Diviser));
-            return LightsTransformer.Transform(numberOfTotalLightsOn, BerlinClockConstants.RedLight);
+            return LightsTransformer.Transform(numberOfTotalLightsOn, BerlinClockConstants.RedLight, HasLineBreak);
         }
         public bool HasLineBreak
         {
@@ -52,7 +53,7 @@ namespace BerlinClockHcl.Classes.Clock
         {
             short redLightDiviser = 3;
             short numberOfLightsOn = Convert.ToInt16(aTime.Minutes / BerlinClockConstants.Diviser);
-            return LightsTransformer.TransformSpecialCase(BerlinClockConstants.LargerMinutesTotalLights, redLightDiviser, numberOfLightsOn);
+            return LightsTransformer.TransformSpecialCase(BerlinClockConstants.LargerMinutesTotalLights, redLightDiviser, numberOfLightsOn, HasLineBreak);
         }
         public bool HasLineBreak
         {
@@ -65,7 +66,7 @@ namespace BerlinClockHcl.Classes.Clock
         public string GetLightsConfiguration(TimeSpan aTime)
         {
             short numberOfLightsOn = Convert.ToInt16(aTime.Minutes % BerlinClockConstants.Diviser);
-            return LightsTransformer.Transform(numberOfLightsOn, BerlinClockConstants.YellowLight);
+            return LightsTransformer.Transform(numberOfLightsOn, BerlinClockConstants.YellowLight, HasLineBreak);
         }
         public bool HasLineBreak
         {
