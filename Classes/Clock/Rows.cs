@@ -5,6 +5,7 @@ namespace BerlinClockHcl.Classes.Clock
     public interface IRow
     {
         string GetLightsConfiguration(TimeSpan aTimeValue);
+        short NumberOfLights { get; }
         bool HasLineBreak { get; }
     }
 
@@ -13,12 +14,21 @@ namespace BerlinClockHcl.Classes.Clock
         public string GetLightsConfiguration(TimeSpan aTime)
         {
 
-            return (aTime.Seconds % 2 == 0 ? BerlinClockConstants.YellowLight : BerlinClockConstants.OffLight) + "\n";
+            return (aTime.Seconds % 2 == 0 ? BerlinClockConstants.YellowLight.ToString() : BerlinClockConstants.OffLight.ToString()) + "\n";
         }
+        
+        public short NumberOfLights
+        {
+            get { return 1; }
+        }
+
         public bool HasLineBreak
         {
             get { return true; }
         }
+
+
+        
     }
 
     public class FirstRow : IRow
@@ -26,8 +36,14 @@ namespace BerlinClockHcl.Classes.Clock
         public string GetLightsConfiguration(TimeSpan aTime)
         {
             short numberOfLightsOn = Convert.ToInt16(Math.Floor(aTime.TotalHours / BerlinClockConstants.Diviser));
-            return LightsTransformer.Transform(numberOfLightsOn, BerlinClockConstants.RedLight, HasLineBreak);
+            return LightsTransformer.Transform(this, numberOfLightsOn, BerlinClockConstants.RedLight);
         }
+
+        public short NumberOfLights
+        {
+            get { return 4; }
+        }
+
         public bool HasLineBreak
         {
             get { return true; }
@@ -39,8 +55,14 @@ namespace BerlinClockHcl.Classes.Clock
         public string GetLightsConfiguration(TimeSpan aTime)
         {
             short numberOfTotalLightsOn = Convert.ToInt16(Math.Floor(aTime.TotalHours % BerlinClockConstants.Diviser));
-            return LightsTransformer.Transform(numberOfTotalLightsOn, BerlinClockConstants.RedLight, HasLineBreak);
+            return LightsTransformer.Transform(this, numberOfTotalLightsOn, BerlinClockConstants.RedLight);
         }
+
+        public short NumberOfLights
+        {
+            get { return 4; }
+        }
+
         public bool HasLineBreak
         {
             get { return true; }
@@ -53,8 +75,14 @@ namespace BerlinClockHcl.Classes.Clock
         {
             short redLightDiviser = 3;
             short numberOfLightsOn = Convert.ToInt16(aTime.Minutes / BerlinClockConstants.Diviser);
-            return LightsTransformer.TransformSpecialCase(BerlinClockConstants.LargerMinutesTotalLights, redLightDiviser, numberOfLightsOn, HasLineBreak);
+            return LightsTransformer.TransformSpecialCase(this, redLightDiviser, numberOfLightsOn);
         }
+
+        public short NumberOfLights
+        {
+            get { return 11; }
+        }
+
         public bool HasLineBreak
         {
             get { return true; }
@@ -66,8 +94,14 @@ namespace BerlinClockHcl.Classes.Clock
         public string GetLightsConfiguration(TimeSpan aTime)
         {
             short numberOfLightsOn = Convert.ToInt16(aTime.Minutes % BerlinClockConstants.Diviser);
-            return LightsTransformer.Transform(numberOfLightsOn, BerlinClockConstants.YellowLight, HasLineBreak);
+            return LightsTransformer.Transform(this, numberOfLightsOn, BerlinClockConstants.YellowLight);
         }
+
+        public short NumberOfLights
+        {
+            get { return 4; }
+        }
+
         public bool HasLineBreak
         {
             get { return false; }

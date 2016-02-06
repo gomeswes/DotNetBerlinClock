@@ -30,7 +30,7 @@ namespace BerlinClockHcl.Classes.Clock
 
         public string GetLightsConfiguration()
         {
-            var lightsRepresentation  = string.Join("",rows.Select((row) => row.GetLightsConfiguration(this.aTime)));
+            var lightsRepresentation  = string.Join("", rows.Select((row) => row.GetLightsConfiguration(this.aTime)));
             return lightsRepresentation;
         }
     }

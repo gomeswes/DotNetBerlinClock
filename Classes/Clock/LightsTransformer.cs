@@ -1,60 +1,44 @@
-﻿namespace BerlinClockHcl.Classes.Clock
+﻿using System;
+using System.Linq;
+
+namespace BerlinClockHcl.Classes.Clock
 {
     internal static class LightsTransformer
     {
-        internal static string Transform(short numberOfLightsOn, string onLight, bool hasBreakLine)
+        internal static string Transform(IRow theRow, short numberOfLightsOn, char onLight)
         {
-            var lightsConfiguration = string.Empty;
-            while (NumberOfLightsOnAreNotConfigured(lightsConfiguration.Length, numberOfLightsOn))
-            {
-                lightsConfiguration += onLight;
-            }
-            lightsConfiguration = MountLightsOff(BerlinClockConstants.HourRowsTotalLights, lightsConfiguration);
-            
-            
-            if (hasBreakLine)
-            {
-                return lightsConfiguration + "\n";
-            }
-            return lightsConfiguration;
+            var lightsOn = new String('\0', numberOfLightsOn);
+            lightsOn = String.Join("", lightsOn.Select(light => onLight));
+            return AppendLightsOffAndLineBreak(theRow.NumberOfLights, lightsOn, theRow.HasLineBreak);
         }
 
-        private static bool NumberOfLightsOnAreNotConfigured(int lightsConfigurationLength, short numberOfLightsOn)
+        internal static string TransformSpecialCase(IRow theRow, short redLightDiviser, short numberOfLightsOn)
         {
-            return lightsConfigurationLength < numberOfLightsOn;
+            var lightsOn = new String('\0', numberOfLightsOn);
+            lightsOn = String.Join("", lightsOn.Select((light, index) => 
+                    CheckIfIsTimeToUseRed(index, redLightDiviser) 
+                        ? BerlinClockConstants.RedLight : BerlinClockConstants.YellowLight));
+
+            return AppendLightsOffAndLineBreak(theRow.NumberOfLights, lightsOn, theRow.HasLineBreak);
         }
 
-        internal static string TransformSpecialCase(short numberOfTotalLights, short redLightDiviser, short numberOfLightsOn, bool hasBreakLine)
+        private static string AppendLightsOffAndLineBreak(short totalLightsNumber, string lightsOn, bool hasBreakLine)
         {
-            var rowLights = string.Empty;
-            while (NumberOfLightsOnAreNotConfigured(rowLights.Length, numberOfLightsOn))
-            {
-                if (CheckIfIsTimeToUseRed(rowLights.Length, redLightDiviser))
-                    rowLights += BerlinClockConstants.RedLight;
-                else
-                    rowLights += BerlinClockConstants.YellowLight;
-            }
-            rowLights = MountLightsOff(numberOfTotalLights, rowLights);
+            var offLightsNumber = CalculateAmountOfLightsOff(totalLightsNumber, lightsOn.Length);
+            var lightsOff = new String(BerlinClockConstants.OffLight, offLightsNumber);
+            
+            var rowLights = String.Concat(lightsOn, lightsOff);
+
             if (hasBreakLine)
             {
                 return rowLights + "\n";
             }
-            return MountLightsOff(numberOfTotalLights, rowLights);
+            return rowLights;
         }
 
         private static bool CheckIfIsTimeToUseRed(int rowLightsLength, short redLightDiviser)
         {
             return (rowLightsLength + 1) % redLightDiviser == 0;
-        }
-
-        private static string MountLightsOff(short numberOfTotalLights, string rowLights)
-        {
-            int numberOfLightsOff = CalculateAmountOfLightsOff(numberOfTotalLights, rowLights.Length);
-            for (int index = 0; index < numberOfLightsOff; index++)
-            {
-                rowLights += BerlinClockConstants.OffLight;
-            }
-            return rowLights;
         }
 
         private static int CalculateAmountOfLightsOff(short numberOfTotalLights, int rowLightsOnAmount)
