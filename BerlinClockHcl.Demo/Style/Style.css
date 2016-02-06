@@ -1,4 +1,4 @@
-﻿.row {
+﻿.row-short, .row-long {
     height: 45px;
 }
 
@@ -6,9 +6,15 @@
     width :25px;
 }
 
-.row span {
+.row-long span {
     height: 100%;
-    width: 25px;
+    width: 21px;
+    display: inline-block;
+}
+
+.row-short span {
+    height: 100%;
+    width: 66px;
     display: inline-block;
 }
 
